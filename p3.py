@@ -44,12 +44,87 @@ print("\n")
 """
 PART 2
 """
+"""
+PART 2
+"""
+print("--- PART 2: Linear Approximation Trail ---")
+print("Trace connecting plaintext bits P1, P2, P4, P5 to bit H1:")
+print("1. Round 1, S11: Input mask a=6 (P1, P2). Output mask b=4 (B1).")
+print("2. Round 1, S12: Input mask a=6 (P4, P5). Output mask b=4 (B4).")
+print("3. Permutation: B1 connects to E1, and B4 connects to E2.")
+print("4. Round 2, S21: Input mask a=6 (E1, E2). Output mask b=4 (F1).")
+print("5. Permutation: F1 connects directly to H1.")
+print("Conclusion: The trail uses three active S-boxes (S11, S12, S21), all with input sum 6 and output sum 4.\n")
 
+# ASCII Art Sketch of the Trail
+sketch = """
+   --- ACTIVE LINEAR TRAIL SKETCH ---
+   
+   Plaintext Bits:   P1  P2      P4  P5
+                      |   |       |   |
+                      v   v       v   v
+                    +-------------------+
+                    |  Subkey K1 Mixing |
+                    +-------------------+
+                      |   |       |   |
+                      v   v       v   v
+                    +-------+   +-------+
+                    |  S11  |   |  S12  |
+                    +-------+   +-------+
+                      |           |      
+                     B1          B4      
+                       \           \     
+                        \           \    (Permutation layer)
+                         \          /    (B1 -> E1, B4 -> E2)
+                          \        /     
+                           v      v      
+                    +-------------------+
+                    |  Subkey K2 Mixing |
+                    +-------------------+
+                           |      |      
+                           v      v      
+                         +----------+    
+                         |   S21    |    
+                         +----------+    
+                           |             
+                          F1             
+                           |             
+                           v             
+                    +-------------------+
+                    |  Subkey K3 Mixing |
+                    +-------------------+
+                           |             
+                           v             
+                          H1             
+   
+   ----------------------------------
+"""
+print(sketch)
 
 """
 PART 3
 """
+print("--- PART 3: Total Bias of the Trail ---")
+# S-boxes all use a = 6 and b = 4
+a, b = 6, 4
 
+# Recalculate NL(6,4) to find the bias
+count = 0
+for x in range(8):
+    if parity(a & x) == parity(b & sbox[x]):
+        count += 1
+
+nl_minus_4 = count - 4
+epsilon = nl_minus_4 / 8.0
+
+print(f"Bias for each active S-box (input sum {a}, output sum {b}) is: {nl_minus_4} / 8 = {epsilon}")
+
+# Applying the Piling-Up Lemma for l=3 active S-boxes
+# Formula: Total Bias = 2^(l-1) * (epsilon_1 * epsilon_2 * ... * epsilon_l)
+l = 3
+total_bias = (2**(l - 1)) * (epsilon**l)
+
+print(f"Total bias of the linear approximation trail using Piling-Up Lemma: {total_bias}\n")
 
 """
 PART 4

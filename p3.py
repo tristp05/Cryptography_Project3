@@ -129,7 +129,40 @@ print(f"Total bias of the linear approximation trail using Piling-Up Lemma: {tot
 """
 PART 4
 """
+print("--- PART 4: Counter Values of Each Key ---")
+S_box = {0:6, 1:5, 2:1, 3:0, 4:3, 5:2, 6:7, 7:4}
 
+# Inverse S-box
+S_box_inv = {}
+for i in range(len(S_box)):
+    S_box_inv[S_box[i]] = i
+
+pairs = [
+    (0b100111, 0b100100),
+    (0b000111, 0b110010),
+    (0b001100, 0b111001),
+    (0b011000, 0b011101),
+    (0b001000, 0b001101),
+    (0b011010, 0b101001),
+]
+
+for key in range(8):
+    count = 0
+    for pair in range(len(pairs)):
+        p = pairs[pair][0]
+        c = pairs[pair][1] >> 3
+        P1 = (p >> 5) & 1
+        P2 = (p >> 4) & 1
+        P4 = (p >> 2) & 1
+        P5 = (p >> 1) & 1
+        v = key ^ c
+        u = S_box_inv[v]
+        H1 = (u >> 2) & 1
+        z = P1 ^ P2 ^ P4 ^ P5 ^ H1
+        if z == 0: 
+            count += 1
+        
+    print("Counter for", (bin(key)), "=", count)
 
 """
 PART 5

@@ -2,6 +2,7 @@
 """
 PART 1
 """
+print("--- PART 1: Linear Approximation Table ---")
 # S-box mapping: sbox[x] = S(x) for x = 0 to 7
 sbox = [6, 5, 1, 0, 3, 2, 7, 4]
 
@@ -39,11 +40,8 @@ for a in range(8):
         else:
             print(f" {entry:2d} ", end="")
     print()
-print("\n")
+print("\n\n")
 
-"""
-PART 2
-"""
 """
 PART 2
 """
@@ -104,7 +102,7 @@ print(sketch)
 """
 PART 3
 """
-print("--- PART 3: Total Bias of the Trail ---")
+print("\n--- PART 3: Total Bias of the Trail ---")
 # S-boxes all use a = 6 and b = 4
 a, b = 6, 4
 
@@ -129,7 +127,7 @@ print(f"Total bias of the linear approximation trail using Piling-Up Lemma: {tot
 """
 PART 4
 """
-print("--- PART 4: Counter Values of Each Key ---")
+print("\n--- PART 4: Counter Values of Each Key ---")
 S_box = {0:6, 1:5, 2:1, 3:0, 4:3, 5:2, 6:7, 7:4}
 
 # Inverse S-box
@@ -167,8 +165,19 @@ for key in range(8):
 """
 PART 5
 """
+print("\n\n--- PART 5: First and Third bits of Subkey ---")
+print("Key has 6 pairs -> expected random behavior ~3")
+print("Find counter with largest bias from 3")
+print("Counter for 0b000=6 and counter for 0b010=0 are furthest from 3, 0b000=6 is preffered due to sign")
+print("\tCounter for 0b000=6\n\t\tbit1:0 bit2:0 bit3:0")
+print("\tCounter for 0b010=0\n\t\tbit1:0 bit2:1 bit3:0")
+print("bit1=0, bit3=0")
 
 
 """
 PART 6
 """
+print("\n\n--- PART 6: Second bit Insufficiency ---")
+print("Bit2 of K4 can not be determined because it does not show consistent bias.\n" \
+"For the strongest candidates bit1 and bit3 are consistent but bit2 varies.\n" \
+"Therefore it is not possible to determine the second bit from this approximation.\n")

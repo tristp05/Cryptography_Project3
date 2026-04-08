@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+print("By: Tristan Price, Nathan Byun, Ahran Dymond, Barrett Larson")
 """
 PART 1
 """
